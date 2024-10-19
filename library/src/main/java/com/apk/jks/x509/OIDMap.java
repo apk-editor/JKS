@@ -25,12 +25,17 @@
 
 package com.apk.jks.x509;
 
+import android.os.Build;
+
+import androidx.annotation.RequiresApi;
+
 import com.apk.jks.utils.ObjectIdentifier;
 
 import java.security.cert.CertificateException;
 import java.util.HashMap;
 import java.util.Map;
 
+@RequiresApi(api = Build.VERSION_CODES.GINGERBREAD)
 public class OIDMap {
 
     private OIDMap() {

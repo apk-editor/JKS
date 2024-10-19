@@ -25,7 +25,10 @@
 
 package com.apk.jks.utils;
 
+import android.os.Build;
+
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -66,6 +69,7 @@ final public class ObjectIdentifier implements Serializable {
         }
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.GINGERBREAD)
     private void writeObject(ObjectOutputStream os)
             throws IOException {
         if (!componentsCalculated) {
@@ -90,6 +94,7 @@ final public class ObjectIdentifier implements Serializable {
      * Constructs, from a string.  This string should be of the form 1.23.56.
      * Validity check included.
      */
+    @RequiresApi(api = Build.VERSION_CODES.GINGERBREAD)
     public ObjectIdentifier (String oid) throws IOException
     {
         int ch = '.';
@@ -303,6 +308,7 @@ final public class ObjectIdentifier implements Serializable {
      * @return components in an int array, if all the components are less than
      *         Integer.MAX_VALUE. Otherwise, null.
      */
+    @RequiresApi(api = Build.VERSION_CODES.GINGERBREAD)
     private int[] toIntArray() {
         int length = encoding.length;
         int[] result = new int[20];

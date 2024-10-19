@@ -25,6 +25,8 @@
 
 package com.apk.jks.provider;
 
+import android.annotation.SuppressLint;
+
 import com.apk.jks.x509.X509CertImpl;
 import com.apk.jks.x509.X509CRLImpl;
 import com.apk.jks.pkcs.PKCS7;
@@ -433,6 +435,7 @@ public class X509Factory extends CertificateFactorySpi {
      * @returns byte block or null if end of stream
      * @throws IOException If any parsing error
      */
+    @SuppressLint("NewApi")
     private static byte[] readOneBlock(InputStream is) throws IOException {
 
         // The first character of a BLOCK.

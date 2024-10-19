@@ -25,9 +25,12 @@
 
 package com.apk.jks.x509;
 
+import android.os.Build;
+
 import com.apk.jks.utils.DerValue;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 
 import com.apk.jks.utils.DerOutputStream;
 
@@ -56,6 +59,7 @@ public class GeneralName {
      *
      * @param encName the DER encoded GeneralName.
      */
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public GeneralName(DerValue encName) throws IOException {
         this(encName, false);
     }
@@ -66,6 +70,7 @@ public class GeneralName {
      * @param encName the DER encoded GeneralName.
      * @param nameConstraint true if general name is a name constraint
      */
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public GeneralName(DerValue encName, boolean nameConstraint)
         throws IOException {
         short tag = (byte)(encName.tag & 0x1f);

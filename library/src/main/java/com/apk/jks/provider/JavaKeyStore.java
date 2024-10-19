@@ -25,6 +25,10 @@
 
 package com.apk.jks.provider;
 
+import android.os.Build;
+
+import androidx.annotation.RequiresApi;
+
 import com.apk.jks.pkcs.EncryptedPrivateKeyInfo;
 
 import java.io.ByteArrayInputStream;
@@ -448,6 +452,7 @@ public abstract class JavaKeyStore extends KeyStoreSpi {
      * @throws CertificateException     if any of the certificates included in
      *                                  the keystore data could not be stored
      */
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public void engineStore(OutputStream stream, char[] password)
             throws NoSuchAlgorithmException, CertificateException, IOException {
         synchronized (entries) {
@@ -580,6 +585,7 @@ public abstract class JavaKeyStore extends KeyStoreSpi {
      * @throws CertificateException     if any of the certificates in the
      *                                  keystore could not be loaded
      */
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public void engineLoad(InputStream stream, char[] password)
             throws IOException, NoSuchAlgorithmException, CertificateException {
         synchronized (entries) {
@@ -725,7 +731,7 @@ public abstract class JavaKeyStore extends KeyStoreSpi {
                 for (int i = 0; i < computed.length; i++) {
                     if (computed[i] != actual[i]) {
                         Throwable t = new UnrecoverableKeyException("Password verification failed");
-                        throw (IOException) new IOException("Keystore was tampered with, or "
+                        throw new IOException("Keystore was tampered with, or "
                                 + "password was incorrect", t);
                     }
                 }
@@ -737,6 +743,7 @@ public abstract class JavaKeyStore extends KeyStoreSpi {
      * To guard against tampering with the keystore, we append a keyed
      * hash with a bit of whitener.
      */
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     private MessageDigest getPreKeyedHash(char[] password) throws NoSuchAlgorithmException {
         int i, j;
 

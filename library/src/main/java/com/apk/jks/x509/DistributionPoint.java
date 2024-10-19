@@ -25,6 +25,8 @@
 
 package com.apk.jks.x509;
 
+import android.os.Build;
+
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Objects;
@@ -34,6 +36,7 @@ import com.apk.jks.utils.DerOutputStream;
 import com.apk.jks.utils.DerValue;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 
 public class DistributionPoint {
 
@@ -138,6 +141,7 @@ public class DistributionPoint {
      * @param out the DerOutputStream to write the extension to.
      * @exception IOException on error.
      */
+    @RequiresApi(api = Build.VERSION_CODES.GINGERBREAD)
     public void encode(DerOutputStream out) throws IOException {
         DerOutputStream tagged = new DerOutputStream();
 

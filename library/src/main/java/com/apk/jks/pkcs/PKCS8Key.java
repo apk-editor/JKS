@@ -25,6 +25,8 @@
 
 package com.apk.jks.pkcs;
 
+import android.os.Build;
+
 import com.apk.jks.utils.Debug;
 import com.apk.jks.utils.DerOutputStream;
 import com.apk.jks.utils.DerValue;
@@ -49,6 +51,7 @@ import java.security.spec.PKCS8EncodedKeySpec;
 import com.apk.jks.utils.HexDumpEncoder;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 
 public class PKCS8Key implements PrivateKey {
 
@@ -102,10 +105,9 @@ public class PKCS8Key implements PrivateKey {
      * @param in the DER-encoded SubjectPublicKeyInfo value
      * @exception IOException on data format errors
      */
-    public static PrivateKey parseKey (DerValue in) throws IOException
-    {
+    public static PrivateKey parseKey (DerValue in) throws IOException {
         AlgorithmId algorithm;
-        PrivateKey privKey;
+        PrivateKey privKey = null;
 
         if (in.tag != DerValue.tag_Sequence)
             throw new IOException ("corrupt private key");
@@ -121,7 +123,9 @@ public class PKCS8Key implements PrivateKey {
         algorithm = AlgorithmId.parse (in.data.getDerValue ());
 
         try {
-            privKey = buildPKCS8Key (algorithm, in.data.getOctetString ());
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                privKey = buildPKCS8Key (algorithm, in.data.getOctetString ());
+            }
 
         } catch (InvalidKeyException e) {
             throw new IOException("corrupt private key");
@@ -155,6 +159,7 @@ public class PKCS8Key implements PrivateKey {
      * specific algorithm ID or else returning this generic base class.
      * See the description above.
      */
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     static PrivateKey buildPKCS8Key (AlgorithmId algid, byte[] key)
     throws IOException, InvalidKeyException
     {

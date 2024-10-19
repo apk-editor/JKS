@@ -25,6 +25,8 @@
 
 package com.apk.jks.x509;
 
+import android.os.Build;
+
 import com.apk.jks.utils.Debug;
 
 import java.io.IOException;
@@ -43,6 +45,7 @@ import java.util.Map;
 import com.apk.jks.utils.HexDumpEncoder;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 
 import com.apk.jks.utils.DerInputStream;
 import com.apk.jks.utils.DerOutputStream;
@@ -77,11 +80,13 @@ public class CertificateExtensions implements CertAttrSet<Extension> {
      * @param in the DerInputStream to read the Extension from.
      * @exception IOException on decoding errors.
      */
+    @RequiresApi(api = Build.VERSION_CODES.GINGERBREAD)
     public CertificateExtensions(DerInputStream in) throws IOException {
         init(in);
     }
 
     // helper routine
+    @RequiresApi(api = Build.VERSION_CODES.GINGERBREAD)
     private void init(DerInputStream in) throws IOException {
 
         DerValue[] exts = in.getSequence(5);
@@ -95,6 +100,7 @@ public class CertificateExtensions implements CertAttrSet<Extension> {
     private static final Class[] PARAMS = {Boolean.class, Object.class};
 
     // Parse the encoded extension
+    @RequiresApi(api = Build.VERSION_CODES.GINGERBREAD)
     private void parseExtension(Extension ext) throws IOException {
         try {
             Class extClass = OIDMap.getClass(ext.getExtensionId());
@@ -135,12 +141,12 @@ public class CertificateExtensions implements CertAttrSet<Extension> {
             if (e instanceof IOException) {
                 throw (IOException)e;
             } else {
-                throw (IOException) new IOException(e.toString(), e);
+                throw new IOException(e.toString(), e);
             }
         } catch (IOException e) {
             throw e;
         } catch (Exception e) {
-            throw (IOException) new IOException(e.toString(), e);
+            throw new IOException(e.toString(), e);
         }
     }
 

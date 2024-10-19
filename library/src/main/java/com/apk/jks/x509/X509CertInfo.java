@@ -25,6 +25,8 @@
 
 package com.apk.jks.x509;
 
+import android.os.Build;
+
 import com.apk.jks.utils.DerValue;
 
 import java.io.IOException;
@@ -40,6 +42,7 @@ import java.util.Map;
 import com.apk.jks.utils.HexDumpEncoder;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 
 import com.apk.jks.utils.DerInputStream;
 import com.apk.jks.utils.DerOutputStream;
@@ -122,6 +125,7 @@ public class X509CertInfo implements CertAttrSet<String> {
      * @param cert the encoded bytes, with no trailing data.
      * @exception CertificateParsingException on parsing errors.
      */
+    @RequiresApi(api = Build.VERSION_CODES.GINGERBREAD)
     public X509CertInfo(byte[] cert) throws CertificateParsingException {
         try {
             DerValue in = new DerValue(cert);
@@ -140,6 +144,7 @@ public class X509CertInfo implements CertAttrSet<String> {
      * @param derVal the der value containing the encoded cert.
      * @exception CertificateParsingException on parsing errors.
      */
+    @RequiresApi(api = Build.VERSION_CODES.GINGERBREAD)
     public X509CertInfo(DerValue derVal) throws CertificateParsingException {
         try {
             parse(derVal);
@@ -155,6 +160,7 @@ public class X509CertInfo implements CertAttrSet<String> {
      * @exception CertificateException on encoding errors.
      * @exception IOException on other errors.
      */
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public void encode(OutputStream out)
     throws CertificateException, IOException {
         if (rawCertInfo == null) {
@@ -197,6 +203,7 @@ public class X509CertInfo implements CertAttrSet<String> {
      *
      * @exception CertificateEncodingException on encoding information errors.
      */
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public byte[] getEncodedInfo() throws CertificateEncodingException {
         try {
             if (rawCertInfo == null) {
@@ -265,6 +272,7 @@ public class X509CertInfo implements CertAttrSet<String> {
     /**
      * Returns a printable representation of the certificate.
      */
+    @RequiresApi(api = Build.VERSION_CODES.GINGERBREAD)
     @NonNull
     public String toString() {
 
@@ -626,6 +634,7 @@ public class X509CertInfo implements CertAttrSet<String> {
     /*
      * This routine unmarshals the certificate information.
      */
+    @RequiresApi(api = Build.VERSION_CODES.GINGERBREAD)
     private void parse(DerValue val)
     throws CertificateParsingException, IOException {
         DerInputStream in;
@@ -759,6 +768,7 @@ public class X509CertInfo implements CertAttrSet<String> {
     /*
      * Marshal the contents of a "raw" certificate into a DER sequence.
      */
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     private void emit(DerOutputStream out)
     throws CertificateException, IOException {
         DerOutputStream tmp = new DerOutputStream();

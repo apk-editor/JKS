@@ -25,6 +25,10 @@
 
 package com.apk.jks.utils;
 
+import android.os.Build;
+
+import androidx.annotation.RequiresApi;
+
 import java.io.EOFException;
 import java.io.IOException;
 import java.io.InputStream;
@@ -32,6 +36,7 @@ import java.util.Arrays;
 
 public class IOUtils {
 
+    @RequiresApi(api = Build.VERSION_CODES.GINGERBREAD)
     public static byte[] readFully(InputStream is, int length, boolean readAll)
             throws IOException {
         byte[] output = {};

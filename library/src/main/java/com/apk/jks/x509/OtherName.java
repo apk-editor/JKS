@@ -25,7 +25,10 @@
 
 package com.apk.jks.x509;
 
+import android.os.Build;
+
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 
 import java.io.IOException;
 import java.lang.reflect.Constructor;
@@ -53,6 +56,7 @@ public class OtherName implements GeneralNameInterface {
      * @param derValue the encoded DER OtherName.
      * @exception IOException on error.
      */
+    @RequiresApi(api = Build.VERSION_CODES.GINGERBREAD)
     public OtherName(DerValue derValue) throws IOException {
         DerInputStream in = derValue.toDerInputStream();
 
@@ -78,6 +82,7 @@ public class OtherName implements GeneralNameInterface {
     /**
      * Get GeneralNameInterface
      */
+    @RequiresApi(api = Build.VERSION_CODES.GINGERBREAD)
     private GeneralNameInterface getGNI(ObjectIdentifier oid, byte[] nameValue)
             throws IOException {
         try {
@@ -126,6 +131,7 @@ public class OtherName implements GeneralNameInterface {
      *
      * @return true iff the names are identical.
      */
+    @RequiresApi(api = Build.VERSION_CODES.GINGERBREAD)
     public boolean equals(Object other) {
         if (this == other) {
             return true;

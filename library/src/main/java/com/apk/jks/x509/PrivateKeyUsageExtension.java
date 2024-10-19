@@ -25,9 +25,12 @@
 
 package com.apk.jks.x509;
 
+import android.os.Build;
+
 import com.apk.jks.utils.DerValue;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -62,6 +65,7 @@ public class PrivateKeyUsageExtension extends Extension implements CertAttrSet<S
     private Date        notAfter = null;
 
     // Encode this extension value.
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     private void encodeThis() throws IOException {
         if (notBefore == null && notAfter == null) {
             this.extensionValue = null;
@@ -190,6 +194,7 @@ public class PrivateKeyUsageExtension extends Extension implements CertAttrSet<S
      * @param out the OutputStream to write the extension to.
      * @exception IOException on encoding errors.
      */
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public void encode(OutputStream out) throws IOException {
         DerOutputStream tmp = new DerOutputStream();
         if (extensionValue == null) {
@@ -205,6 +210,7 @@ public class PrivateKeyUsageExtension extends Extension implements CertAttrSet<S
      * Set the attribute value.
      * @exception CertificateException on attribute handling errors.
      */
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public void set(String name, Object obj)
     throws CertificateException, IOException {
         if (!(obj instanceof Date)) {
@@ -240,6 +246,7 @@ public class PrivateKeyUsageExtension extends Extension implements CertAttrSet<S
      * Delete the attribute value.
      * @exception CertificateException on attribute handling errors.
      */
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public void delete(String name) throws CertificateException, IOException {
         if (name.equalsIgnoreCase(NOT_BEFORE)) {
             notBefore = null;

@@ -25,7 +25,10 @@
 
 package com.apk.jks.x509;
 
+import android.os.Build;
+
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 
 import java.io.IOException;
 import java.util.Enumeration;
@@ -150,6 +153,7 @@ public class ReasonFlags {
      * @param out the DerOutputStream to write the extension to.
      * @exception IOException on encoding errors.
      */
+    @RequiresApi(api = Build.VERSION_CODES.GINGERBREAD)
     public void encode(DerOutputStream out) throws IOException {
         out.putTruncatedUnalignedBitString(new BitArray(this.bitString));
     }

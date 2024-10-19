@@ -25,6 +25,10 @@
 
 package com.apk.jks.provider.certpath;
 
+import android.os.Build;
+
+import androidx.annotation.RequiresApi;
+
 import com.apk.jks.pkcs.ContentInfo;
 import com.apk.jks.pkcs.PKCS7;
 import com.apk.jks.pkcs.SignerInfo;
@@ -295,6 +299,7 @@ public class X509CertPath extends CertPath {
      * @return a byte array containing the binary encoding of the PKCS#7 object
      * @exception CertificateEncodingException if an exception occurs
      */
+    @RequiresApi(api = Build.VERSION_CODES.GINGERBREAD)
     private byte[] encodePKCS7() throws CertificateEncodingException {
         PKCS7 p7 = new PKCS7(new AlgorithmId[0],
                              new ContentInfo(ContentInfo.DATA_OID, null),
@@ -318,6 +323,7 @@ public class X509CertPath extends CertPath {
      * @exception CertificateEncodingException if an encoding error occurs or
      *   the encoding requested is not supported
      */
+    @RequiresApi(api = Build.VERSION_CODES.GINGERBREAD)
     public byte[] getEncoded(String encoding)
             throws CertificateEncodingException {
         if (PKIPATH_ENCODING.equals(encoding)) {

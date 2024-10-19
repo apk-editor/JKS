@@ -25,15 +25,19 @@
 
 package com.apk.jks.x509;
 
+import android.os.Build;
+
 import com.apk.jks.utils.DerOutputStream;
 import com.apk.jks.utils.ObjectIdentifier;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.Enumeration;
 
+@RequiresApi(api = Build.VERSION_CODES.GINGERBREAD)
 public class InhibitAnyPolicyExtension extends Extension
 implements CertAttrSet<String> {
 

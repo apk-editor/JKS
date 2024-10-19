@@ -25,9 +25,12 @@
 
 package com.apk.jks.x509;
 
+import android.os.Build;
+
 import com.apk.jks.utils.DerValue;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 
 import java.io.IOException;
 import java.util.Locale;
@@ -43,6 +46,7 @@ public class RFC822Name implements GeneralNameInterface {
      * @param derValue the encoded DER RFC822Name.
      * @exception IOException on error.
      */
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public RFC822Name(DerValue derValue) throws IOException {
         name = derValue.getIA5String();
         parseName(name);
@@ -60,6 +64,7 @@ public class RFC822Name implements GeneralNameInterface {
      * @param name the RFC822Name string
      * @throws IOException if name is not valid
      */
+    @RequiresApi(api = Build.VERSION_CODES.GINGERBREAD)
     public void parseName(String name) throws IOException {
         if (name == null || name.isEmpty()) {
             throw new IOException("RFC822Name may not be null or empty");

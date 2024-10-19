@@ -25,10 +25,13 @@
 
 package com.apk.jks.x509;
 
+import android.os.Build;
+
 import com.apk.jks.utils.HexDumpEncoder;
 import com.apk.jks.utils.DerValue;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -233,6 +236,7 @@ public class X509CertImpl extends X509Certificate implements DerEncoder {
      * @exception SignatureException on signature errors.
      * @exception CertificateException on encoding errors.
      */
+    @RequiresApi(api = Build.VERSION_CODES.GINGERBREAD)
     public void verify(PublicKey key)
     throws CertificateException, NoSuchAlgorithmException,
         InvalidKeyException, NoSuchProviderException, SignatureException {
@@ -256,6 +260,7 @@ public class X509CertImpl extends X509Certificate implements DerEncoder {
      * @exception SignatureException on signature errors.
      * @exception CertificateException on encoding errors.
      */
+    @RequiresApi(api = Build.VERSION_CODES.GINGERBREAD)
     public synchronized void verify(PublicKey key, String sigProvider)
             throws CertificateException, NoSuchAlgorithmException,
             InvalidKeyException, NoSuchProviderException, SignatureException {
@@ -314,6 +319,7 @@ public class X509CertImpl extends X509Certificate implements DerEncoder {
      * @exception SignatureException on signature errors.
      * @exception CertificateException on encoding errors.
      */
+    @RequiresApi(api = Build.VERSION_CODES.GINGERBREAD)
     public void sign(PrivateKey key, String algorithm)
     throws CertificateException, NoSuchAlgorithmException,
         InvalidKeyException, NoSuchProviderException, SignatureException {
@@ -337,6 +343,7 @@ public class X509CertImpl extends X509Certificate implements DerEncoder {
      * @exception SignatureException on signature errors.
      * @exception CertificateException on encoding errors.
      */
+    @RequiresApi(api = Build.VERSION_CODES.GINGERBREAD)
     public void sign(PrivateKey key, String algorithm, String provider)
     throws CertificateException, NoSuchAlgorithmException,
         InvalidKeyException, NoSuchProviderException, SignatureException {
@@ -1028,6 +1035,7 @@ public class X509CertImpl extends X509Certificate implements DerEncoder {
      *
      * @param oid the Object Identifier value for the extension.
      */
+    @RequiresApi(api = Build.VERSION_CODES.GINGERBREAD)
     public byte[] getExtensionValue(String oid) {
         try {
             ObjectIdentifier findOID = new ObjectIdentifier(oid);
@@ -1081,6 +1089,7 @@ public class X509CertImpl extends X509Certificate implements DerEncoder {
      * (oid = 2.5.29.15).
      * @return the bit values of this extension as an array of booleans.
      */
+    @RequiresApi(api = Build.VERSION_CODES.GINGERBREAD)
     public boolean[] getKeyUsage() {
         try {
             String extAlias = OIDMap.getName(PKIXExtensions.KeyUsage_Id);
@@ -1126,6 +1135,7 @@ public class X509CertImpl extends X509Certificate implements DerEncoder {
      * the critical BasicConstraints extension, (oid = 2.5.29.19).
      * @return the length of the constraint.
      */
+    @RequiresApi(api = Build.VERSION_CODES.GINGERBREAD)
     public int getBasicConstraints() {
         try {
             String extAlias = OIDMap.getName(PKIXExtensions.BasicConstraints_Id);
@@ -1155,6 +1165,7 @@ public class X509CertImpl extends X509Certificate implements DerEncoder {
      * @param names the GeneralNames to be converted
      * @return an immutable Collection of alternative names
      */
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     private static Collection<List<?>> makeAltNames(GeneralNames names) {
         if (names.isEmpty()) {
             return Collections.emptySet();
@@ -1245,6 +1256,7 @@ public class X509CertImpl extends X509Certificate implements DerEncoder {
      * provider. It is better performance-wise since it returns cached
      * values.
      */
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public synchronized Collection<List<?>> getSubjectAlternativeNames() {
         // return cached value if we can
         if (readOnly && subjectAlternativeNames != null)  {
@@ -1273,6 +1285,7 @@ public class X509CertImpl extends X509Certificate implements DerEncoder {
      * provider. It is better performance-wise since it returns cached
      * values.
      */
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public synchronized Collection<List<?>> getIssuerAlternativeNames() {
         // return cached value if we can
         if (readOnly && issuerAlternativeNames != null) {

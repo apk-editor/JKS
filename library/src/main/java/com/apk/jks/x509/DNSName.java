@@ -25,9 +25,12 @@
 
 package com.apk.jks.x509;
 
+import android.os.Build;
+
 import com.apk.jks.utils.DerOutputStream;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 
 import com.apk.jks.utils.DerValue;
 
@@ -47,6 +50,7 @@ public class DNSName implements GeneralNameInterface {
      * @param derValue the encoded DER DNSName.
      * @exception IOException on error.
      */
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public DNSName(DerValue derValue) throws IOException {
         name = derValue.getIA5String();
     }
@@ -57,6 +61,7 @@ public class DNSName implements GeneralNameInterface {
      * @param name the DNSName.
      * @throws IOException if the name is not a valid DNSName subjectAltName
      */
+    @RequiresApi(api = Build.VERSION_CODES.GINGERBREAD)
     public DNSName(String name) throws IOException {
         if (name == null || name.isEmpty())
             throw new IOException("DNS name must not be null");

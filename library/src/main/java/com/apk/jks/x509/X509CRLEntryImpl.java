@@ -25,6 +25,8 @@
 
 package com.apk.jks.x509;
 
+import android.os.Build;
+
 import com.apk.jks.utils.DerOutputStream;
 
 import java.io.IOException;
@@ -46,6 +48,7 @@ import com.apk.jks.utils.HexDumpEncoder;
 import com.apk.jks.utils.DerValue;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 
 import com.apk.jks.utils.DerInputStream;
 import com.apk.jks.utils.ObjectIdentifier;
@@ -94,6 +97,7 @@ public class X509CRLEntryImpl extends X509CRLEntry {
      * certificate is written.
      * @exception CRLException on encoding errors.
      */
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public void encode(DerOutputStream outStrm) throws CRLException {
         try {
             if (revokedCert == null) {
@@ -127,6 +131,7 @@ public class X509CRLEntryImpl extends X509CRLEntry {
      *
      * @exception CRLException if an encoding error occurs.
      */
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public byte[] getEncoded() throws CRLException {
         if (revokedCert == null)
             this.encode(new DerOutputStream());
@@ -171,6 +176,7 @@ public class X509CRLEntryImpl extends X509CRLEntry {
      * method in X509CRLEntry. It is better performance-wise since it returns
      * cached values.
      */
+    @RequiresApi(api = Build.VERSION_CODES.GINGERBREAD)
     @Override
     public CRLReason getRevocationReason() {
         Extension ext = getExtension(PKIXExtensions.ReasonCode_Id);
@@ -186,6 +192,7 @@ public class X509CRLEntryImpl extends X509CRLEntry {
      *
      * @return value of this revoked certificate in a printable form.
      */
+    @RequiresApi(api = Build.VERSION_CODES.GINGERBREAD)
     @NonNull
     @Override
     public String toString() {
@@ -290,6 +297,7 @@ public class X509CRLEntryImpl extends X509CRLEntry {
      * @param oid the Object Identifier value for the extension.
      * @return the DER encoded octet string of the extension value.
      */
+    @RequiresApi(api = Build.VERSION_CODES.GINGERBREAD)
     public byte[] getExtensionValue(String oid) {
         if (extensions == null)
             return null;
@@ -332,6 +340,7 @@ public class X509CRLEntryImpl extends X509CRLEntry {
      * @param oid ObjectIdentifier of extension desired
      * @returns Extension of type <extension> or null, if not found
      */
+    @RequiresApi(api = Build.VERSION_CODES.GINGERBREAD)
     public Extension getExtension(ObjectIdentifier oid) {
         if (extensions == null)
             return null;
@@ -378,6 +387,7 @@ public class X509CRLEntryImpl extends X509CRLEntry {
      *
      * @return the CertificateIssuerExtension, or null if it does not exist
      */
+    @RequiresApi(api = Build.VERSION_CODES.GINGERBREAD)
     CertificateIssuerExtension getCertificateIssuerExtension() {
         return (CertificateIssuerExtension)
             getExtension(PKIXExtensions.CertificateIssuer_Id);

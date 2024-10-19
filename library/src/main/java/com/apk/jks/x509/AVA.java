@@ -25,6 +25,8 @@
 
 package com.apk.jks.x509;
 
+import android.os.Build;
+
 import com.apk.jks.action.GetBooleanAction;
 import com.apk.jks.pkcs.PKCS9Attribute;
 import com.apk.jks.utils.Debug;
@@ -34,6 +36,7 @@ import com.apk.jks.utils.DerValue;
 import com.apk.jks.utils.ObjectIdentifier;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -117,6 +120,7 @@ public class AVA implements DerEncoder {
      * separators (",", ";"), or DN terminators (">"), and removes
      * cosmetic whitespace at the end of values.
      */
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     AVA(Reader in, Map<String, String> keywordMap) throws IOException {
         this(in, DEFAULT, keywordMap);
     }
@@ -136,6 +140,7 @@ public class AVA implements DerEncoder {
      * @throws IOException if the AVA String is not valid in the specified
      *                     standard or an OID String from the keywordMap is improperly formatted
      */
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     AVA(Reader in, int format, Map<String, String> keywordMap)
             throws IOException {
         // assume format is one of DEFAULT, RFC1779, RFC2253
@@ -192,36 +197,10 @@ public class AVA implements DerEncoder {
     }
 
     /**
-     * Get the ObjectIdentifier of this AVA.
-     */
-    public ObjectIdentifier getObjectIdentifier() {
-        return oid;
-    }
-
-    /**
      * Get the value of this AVA as a DerValue.
      */
     public DerValue getDerValue() {
         return value;
-    }
-
-    /**
-     * Get the value of this AVA as a String.
-     *
-     * @throws RuntimeException if we could not obtain the string form
-     *                          (should not occur)
-     */
-    public String getValueString() {
-        try {
-            String s = value.getAsString();
-            if (s == null) {
-                throw new RuntimeException("AVA string is null");
-            }
-            return s;
-        } catch (IOException e) {
-            // should not occur
-            throw new RuntimeException("AVA error: " + e, e);
-        }
     }
 
     private static DerValue parseHexString(Reader in, int format) throws IOException {
@@ -265,6 +244,7 @@ public class AVA implements DerEncoder {
         return new DerValue(baos.toByteArray());
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     private DerValue parseQuotedString(Reader in, StringBuilder temp) throws IOException {
 
         // RFC1779 specifies that an entire RDN may be enclosed in double
@@ -338,6 +318,7 @@ public class AVA implements DerEncoder {
         }
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     private DerValue parseString(Reader in, int c, int format, StringBuilder temp) throws IOException {
         List<Byte> embeddedHex = new ArrayList<>();
         boolean isPrintableString = true;
@@ -465,6 +446,7 @@ public class AVA implements DerEncoder {
         return null;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     private static String getEmbeddedHexString(List<Byte> hexList) {
         int n = hexList.size();
         byte[] hexBytes = new byte[n];
@@ -544,6 +526,7 @@ public class AVA implements DerEncoder {
         }
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public boolean equals(Object obj) {
         if (this == obj) {
             return true;
@@ -560,6 +543,7 @@ public class AVA implements DerEncoder {
      *
      * @return a hashcode for this AVA.
      */
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public int hashCode() {
         return toRFC2253CanonicalString().hashCode();
     }
@@ -588,6 +572,7 @@ public class AVA implements DerEncoder {
         out.write(tmp2.toByteArray());
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.GINGERBREAD)
     private String toKeyword(int format, Map<String, String> oidMap) {
         return AVAKeyword.getKeyword(oid, format, oidMap);
     }
@@ -596,6 +581,7 @@ public class AVA implements DerEncoder {
      * Returns a printable form of this attribute, using RFC 1779
      * syntax for individual attribute/value assertions.
      */
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @NonNull
     public String toString() {
         return toKeywordValueString(toKeyword(DEFAULT, Collections.emptyMap()));
@@ -607,6 +593,7 @@ public class AVA implements DerEncoder {
      * emits standardised keywords, as well as keywords contained in the
      * OID/keyword map.
      */
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public String toRFC1779String(Map<String, String> oidMap) {
         return toKeywordValueString(toKeyword(RFC1779, oidMap));
     }
@@ -617,6 +604,7 @@ public class AVA implements DerEncoder {
      * emits standardised keywords, as well as keywords contained in the
      * OID/keyword map.
      */
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public String toRFC2253String(Map<String, String> oidMap) {
         /*
          * Section 2.3: The AttributeTypeAndValue is encoded as the string
@@ -747,6 +735,7 @@ public class AVA implements DerEncoder {
         return typeAndValue.toString();
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public String toRFC2253CanonicalString() {
         /*
          * Section 2.3: The AttributeTypeAndValue is encoded as the string
@@ -894,6 +883,7 @@ public class AVA implements DerEncoder {
         return AVAKeyword.hasKeyword(oid);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     private String toKeywordValueString(String keyword) {
         /*
          * Construct the value with as little copying and garbage
@@ -1051,6 +1041,7 @@ class AVAKeyword {
      * @throws IOException If the keyword is not valid in the specified standard
      *                     or the OID String to which a keyword maps to is improperly formatted.
      */
+    @RequiresApi(api = Build.VERSION_CODES.GINGERBREAD)
     static ObjectIdentifier getOID(String keyword, int standard, Map<String, String> extraKeywordMap)
             throws IOException {
 
@@ -1108,6 +1099,7 @@ class AVAKeyword {
      * builtin/default set. If no keyword is available, the ObjectIdentifier
      * is encoded as a String.
      */
+    @RequiresApi(api = Build.VERSION_CODES.GINGERBREAD)
     static String getKeyword(ObjectIdentifier oid, int standard, Map<String, String> extraOidMap) {
         // check extraOidMap first, then fallback to built-in map
         String oidString = oid.toString();

@@ -25,10 +25,13 @@
 
 package com.apk.jks.x509;
 
+import android.os.Build;
+
 import com.apk.jks.utils.DerOutputStream;
 import com.apk.jks.utils.DerValue;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -85,6 +88,7 @@ public class NameConstraintsExtension extends Extension implements CertAttrSet<S
      * @throws ClassCastException if value is not an array of bytes
      * @throws IOException        on error.
      */
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public NameConstraintsExtension(Boolean critical, Object value) throws IOException {
         this.extensionId = PKIXExtensions.NameConstraints_Id;
         this.critical = critical;

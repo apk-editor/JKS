@@ -25,6 +25,8 @@
 
 package com.apk.jks.x509;
 
+import android.os.Build;
+
 import java.io.IOException;
 import java.lang.Integer;
 import java.net.InetAddress;
@@ -35,6 +37,7 @@ import com.apk.jks.utils.DerOutputStream;
 import com.apk.jks.utils.DerValue;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 
 public class IPAddressName implements GeneralNameInterface {
     private byte[] address;
@@ -92,8 +95,8 @@ public class IPAddressName implements GeneralNameInterface {
      * @throws IOException if name can not be converted to a valid IPv4 or IPv6
      *     address
      */
+    @RequiresApi(api = Build.VERSION_CODES.GINGERBREAD)
     public IPAddressName(String name) throws IOException {
-
         if (name == null || name.isEmpty()) {
             throw new IOException("IPAddress cannot be null or empty");
         }

@@ -25,10 +25,13 @@
 
 package com.apk.jks.x509;
 
+import android.os.Build;
+
 import com.apk.jks.utils.DerOutputStream;
 import com.apk.jks.utils.DerValue;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 
 import java.io.IOException;
 
@@ -48,6 +51,7 @@ public class GeneralSubtree {
      *
      * @param val the DER encoded from of the same.
      */
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public GeneralSubtree(DerValue val) throws IOException {
         if (val.tag != DerValue.tag_Sequence) {
             throw new IOException("Invalid encoding for GeneralSubtree.");

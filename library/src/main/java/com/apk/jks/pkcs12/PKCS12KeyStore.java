@@ -25,6 +25,10 @@
 
 package com.apk.jks.pkcs12;
 
+import android.os.Build;
+
+import androidx.annotation.RequiresApi;
+
 import com.apk.jks.pkcs.ContentInfo;
 import com.apk.jks.pkcs.EncryptedPrivateKeyInfo;
 import com.apk.jks.utils.DerInputStream;
@@ -326,8 +330,9 @@ public final class PKCS12KeyStore extends KeyStoreSpi {
      * @exception KeyStoreException if the given key cannot be protected, or
      * this operation fails for some other reason
      */
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public synchronized void engineSetKeyEntry(String alias, Key key,
-                        char[] password, Certificate[] chain)
+                                               char[] password, Certificate[] chain)
         throws KeyStoreException
     {
         try {
@@ -393,8 +398,9 @@ public final class PKCS12KeyStore extends KeyStoreSpi {
      *
      * @exception KeyStoreException if this operation fails.
      */
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public synchronized void engineSetKeyEntry(String alias, byte[] key,
-                                  Certificate[] chain)
+                                               Certificate[] chain)
         throws KeyStoreException
     {
         // key must be encoded as EncryptedPrivateKeyInfo
@@ -441,6 +447,7 @@ public final class PKCS12KeyStore extends KeyStoreSpi {
     /*
      * Generate PBE Algorithm Parameters
      */
+    @RequiresApi(api = Build.VERSION_CODES.GINGERBREAD)
     private AlgorithmParameters getAlgorithmParameters(String algorithm)
         throws IOException
     {
@@ -514,6 +521,7 @@ public final class PKCS12KeyStore extends KeyStoreSpi {
      *
      * @return encrypted private key encoded as EncryptedPrivateKeyInfo
      */
+    @RequiresApi(api = Build.VERSION_CODES.GINGERBREAD)
     private byte[] encryptPrivateKey(byte[] data, char[] password)
         throws UnrecoverableKeyException
     {
@@ -678,6 +686,7 @@ public final class PKCS12KeyStore extends KeyStoreSpi {
      * @exception CertificateException if any of the certificates included in
      * the keystore data could not be stored
      */
+    @RequiresApi(api = Build.VERSION_CODES.GINGERBREAD)
     public synchronized void engineStore(OutputStream stream, char[] password)
         throws IOException, CertificateException
     {
@@ -743,6 +752,7 @@ public final class PKCS12KeyStore extends KeyStoreSpi {
      * Hash-based MAC algorithm combines secret key with message digest to
      * create a message authentication code (MAC)
      */
+    @RequiresApi(api = Build.VERSION_CODES.GINGERBREAD)
     private byte[] calculateMac(char[] passwd, byte[] data)
         throws IOException
     {
@@ -880,6 +890,7 @@ public final class PKCS12KeyStore extends KeyStoreSpi {
      * Each CertBag may include pkcs12 attributes
      * (see comments in getBagAttributes)
      */
+    @RequiresApi(api = Build.VERSION_CODES.GINGERBREAD)
     private byte[] createEncryptedData(char[] password)
         throws CertificateException, IOException
     {
@@ -1027,6 +1038,7 @@ public final class PKCS12KeyStore extends KeyStoreSpi {
      *
      * @return encrypted contents encoded as EncryptedContentInfo
      */
+    @RequiresApi(api = Build.VERSION_CODES.GINGERBREAD)
     private byte[] encryptContent(byte[] data, char[] password)
         throws IOException {
 
@@ -1087,6 +1099,7 @@ public final class PKCS12KeyStore extends KeyStoreSpi {
      * @exception CertificateException if any of the certificates in the
      * keystore could not be loaded
      */
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public synchronized void engineLoad(InputStream stream, char[] password)
         throws IOException, CertificateException
     {
@@ -1261,6 +1274,7 @@ public final class PKCS12KeyStore extends KeyStoreSpi {
         else return null;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     private void loadSafeContents(DerInputStream stream)
         throws IOException, CertificateException
     {

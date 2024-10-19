@@ -25,6 +25,8 @@
 
 package com.apk.jks.pkcs;
 
+import android.os.Build;
+
 import java.io.ByteArrayInputStream;
 import java.io.DataInputStream;
 import java.io.IOException;
@@ -55,6 +57,7 @@ import com.apk.jks.x509.X509CRLImpl;
 import com.apk.jks.x509.X500Name;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 
 public class PKCS7 {
 
@@ -424,6 +427,7 @@ public class PKCS7 {
      * @param out the DerOutputStream to write the encoded data to.
      * @exception IOException on encoding errors.
      */
+    @RequiresApi(api = Build.VERSION_CODES.GINGERBREAD)
     public void encodeSignedData(DerOutputStream out)
         throws IOException
     {

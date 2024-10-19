@@ -25,6 +25,8 @@
 
 package com.apk.jks.x509;
 
+import android.os.Build;
+
 import com.apk.jks.utils.DerInputStream;
 import com.apk.jks.utils.DerOutputStream;
 import com.apk.jks.utils.DerValue;
@@ -32,6 +34,7 @@ import com.apk.jks.utils.ObjectIdentifier;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 
 import java.io.IOException;
 import java.security.Principal;
@@ -58,6 +61,7 @@ public class X500Name implements GeneralNameInterface, Principal {
      *
      * @param dname X.500 Distinguished Name
      */
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public X500Name(String dname) throws IOException {
         this(dname, Collections.emptyMap());
     }
@@ -70,6 +74,7 @@ public class X500Name implements GeneralNameInterface, Principal {
      * @param dname      X.500 Distinguished Name
      * @param keywordMap an additional keyword/OID map
      */
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public X500Name(String dname, Map<String, String> keywordMap) throws IOException {
         parseDN(dname, keywordMap);
     }
@@ -83,6 +88,7 @@ public class X500Name implements GeneralNameInterface, Principal {
      *
      * @param dname X.500 Distinguished Name
      */
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public X500Name(String dname, String format) throws IOException {
         if (dname == null) {
             throw new NullPointerException("Name must not be null");
@@ -242,6 +248,7 @@ public class X500Name implements GeneralNameInterface, Principal {
      * Calculates a hash code value for the object.  Objects
      * which are equal will also have the same hashcode.
      */
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public int hashCode() {
         return getRFC2253CanonicalName().hashCode();
     }
@@ -251,6 +258,7 @@ public class X500Name implements GeneralNameInterface, Principal {
      *
      * @return true iff the names are identical.
      */
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public boolean equals(Object obj) {
         if (this == obj) {
             return true;
@@ -294,6 +302,7 @@ public class X500Name implements GeneralNameInterface, Principal {
      * may contain non-standardised keywords for more readability
      * (keywords from RFCs 1779, 2253, and 3280).
      */
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @NonNull
     public String toString() {
         if (dn == null) {
@@ -307,6 +316,7 @@ public class X500Name implements GeneralNameInterface, Principal {
      * using the algorithm defined in RFC 2253. Only standard attribute type
      * keywords defined in RFC 2253 are emitted.
      */
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public String getRFC2253Name() {
         return getRFC2253Name(Collections.emptyMap());
     }
@@ -317,6 +327,7 @@ public class X500Name implements GeneralNameInterface, Principal {
      * keywords defined in RFC 2253 are emitted, as well as additional
      * keywords contained in the OID/keyword map.
      */
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public String getRFC2253Name(Map<String, String> oidMap) {
         /* check for and return cached name */
         if (oidMap.isEmpty()) {
@@ -328,6 +339,7 @@ public class X500Name implements GeneralNameInterface, Principal {
         return generateRFC2253DN(oidMap);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     private String generateRFC2253DN(Map<String, String> oidMap) {
         /*
          * Section 2.1 : if the RDNSequence is an empty sequence
@@ -356,6 +368,7 @@ public class X500Name implements GeneralNameInterface, Principal {
         return fullname.toString();
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public String getRFC2253CanonicalName() {
         /* check for and return cached name */
         if (canonicalDn != null) {
@@ -394,6 +407,7 @@ public class X500Name implements GeneralNameInterface, Principal {
      * Returns the value of toString().  This call is needed to
      * implement the java.security.Principal interface.
      */
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public String getName() {
         return toString();
     }
@@ -494,6 +508,7 @@ public class X500Name implements GeneralNameInterface, Principal {
      * This method can parse 1779 or 2253 DNs and non-standard 3280 keywords.
      * Additional keywords can be specified in the keyword/OID map.
      */
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     private void parseDN(String dname, Map<String, String> keywordMap)
             throws IOException {
         if (dname == null || dname.isEmpty()) {
@@ -563,6 +578,7 @@ public class X500Name implements GeneralNameInterface, Principal {
         names = dnVector.toArray(new RDN[0]);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     private void parseRFC2253DN(String dnString) throws IOException {
         if (dnString.isEmpty()) {
             names = new RDN[0];
@@ -679,6 +695,7 @@ public class X500Name implements GeneralNameInterface, Principal {
      *
      * Uses RFC 1779 syntax (i.e. little-endian, comma separators)
      */
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     private void generateDN() {
         if (names.length == 1) {
             dn = names[0].toString();
@@ -852,6 +869,7 @@ public class X500Name implements GeneralNameInterface, Principal {
      *                                       narrowing and widening are not supported for this name type.
      * @return constraint type above
      */
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public int constrains(GeneralNameInterface inputName)
             throws UnsupportedOperationException {
         int constraintType;
@@ -885,6 +903,7 @@ public class X500Name implements GeneralNameInterface, Principal {
      *
      * @return true iff this name is within the subtree of other.
      */
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     private boolean isWithinSubtree(X500Name other) {
         if (this == other) {
             return true;

@@ -25,9 +25,12 @@
 
 package com.apk.jks.x509;
 
+import android.os.Build;
+
 import com.apk.jks.utils.DerInputStream;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 
 import com.apk.jks.utils.DerOutputStream;
 import com.apk.jks.utils.DerValue;
@@ -127,6 +130,7 @@ public class CertificateValidity implements CertAttrSet<String> {
      * @param out the OutputStream to marshal the contents to.
      * @exception IOException on errors.
      */
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public void encode(OutputStream out) throws IOException {
 
         // in cases where default constructor is used check for

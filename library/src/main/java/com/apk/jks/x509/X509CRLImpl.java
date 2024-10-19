@@ -25,10 +25,13 @@
 
 package com.apk.jks.x509;
 
+import android.os.Build;
+
 import com.apk.jks.utils.HexDumpEncoder;
 import com.apk.jks.utils.DerValue;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -107,6 +110,7 @@ public class X509CRLImpl extends X509CRL implements DerEncoder {
      * @param crlData the encoded bytes, with no trailing padding.
      * @exception CRLException on parsing errors.
      */
+    @RequiresApi(api = Build.VERSION_CODES.GINGERBREAD)
     public X509CRLImpl(byte[] crlData) throws CRLException {
         try {
             parse(new DerValue(crlData));
@@ -122,6 +126,7 @@ public class X509CRLImpl extends X509CRL implements DerEncoder {
      * @param val a DER value holding at least one CRL
      * @exception CRLException on parsing errors.
      */
+    @RequiresApi(api = Build.VERSION_CODES.GINGERBREAD)
     public X509CRLImpl(DerValue val) throws CRLException {
         try {
             parse(val);
@@ -158,6 +163,7 @@ public class X509CRLImpl extends X509CRL implements DerEncoder {
      * @param out the OutputStream to write to.
      * @exception CRLException on encoding errors.
      */
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public void encodeInfo(OutputStream out) throws CRLException {
         try {
             DerOutputStream tmp = new DerOutputStream();
@@ -216,6 +222,7 @@ public class X509CRLImpl extends X509CRL implements DerEncoder {
      * @exception SignatureException on signature errors.
      * @exception CRLException on encoding errors.
      */
+    @RequiresApi(api = Build.VERSION_CODES.GINGERBREAD)
     public void verify(PublicKey key)
     throws CRLException, NoSuchAlgorithmException, InvalidKeyException,
            NoSuchProviderException, SignatureException {
@@ -238,6 +245,7 @@ public class X509CRLImpl extends X509CRL implements DerEncoder {
      * @exception SignatureException on signature errors.
      * @exception CRLException on encoding errors.
      */
+    @RequiresApi(api = Build.VERSION_CODES.GINGERBREAD)
     public synchronized void verify(PublicKey key, String sigProvider)
             throws CRLException, NoSuchAlgorithmException, InvalidKeyException,
             NoSuchProviderException, SignatureException {
@@ -289,6 +297,7 @@ public class X509CRLImpl extends X509CRL implements DerEncoder {
      * @exception SignatureException on signature errors.
      * @exception CRLException if any mandatory data was omitted.
      */
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public void sign(PrivateKey key, String algorithm)
     throws CRLException, NoSuchAlgorithmException, InvalidKeyException,
         NoSuchProviderException, SignatureException {
@@ -309,6 +318,7 @@ public class X509CRLImpl extends X509CRL implements DerEncoder {
      * @exception SignatureException on signature errors.
      * @exception CRLException if any mandatory data was omitted.
      */
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public void sign(PrivateKey key, String algorithm, String provider)
     throws CRLException, NoSuchAlgorithmException, InvalidKeyException,
         NoSuchProviderException, SignatureException {
@@ -357,6 +367,7 @@ public class X509CRLImpl extends X509CRL implements DerEncoder {
      *
      * @return value of this CRL in a printable form.
      */
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @NonNull
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -702,6 +713,7 @@ public class X509CRLImpl extends X509CRL implements DerEncoder {
      * @param oid the Object Identifier value for the extension.
      * @return the der encoded octet string of the extension value.
      */
+    @RequiresApi(api = Build.VERSION_CODES.GINGERBREAD)
     public byte[] getExtensionValue(String oid) {
         if (extensions == null)
             return null;
@@ -740,6 +752,7 @@ public class X509CRLImpl extends X509CRL implements DerEncoder {
     /*
      * Parses an X.509 CRL, should be used only by constructors.
      */
+    @RequiresApi(api = Build.VERSION_CODES.GINGERBREAD)
     private void parse(DerValue val) throws CRLException, IOException {
         // check if can over write the certificate
         if (readOnly)
@@ -866,6 +879,7 @@ public class X509CRLImpl extends X509CRL implements DerEncoder {
      * @return the X500Principal in a CertificateIssuerExtension, or
      *   prevCertIssuer if it does not exist
      */
+    @RequiresApi(api = Build.VERSION_CODES.GINGERBREAD)
     private X500Principal getCertIssuer(X509CRLEntryImpl entry,
                                         X500Principal prevCertIssuer) throws IOException {
 

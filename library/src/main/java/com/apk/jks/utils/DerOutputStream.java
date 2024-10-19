@@ -25,6 +25,10 @@
 
 package com.apk.jks.utils;
 
+import android.os.Build;
+
+import androidx.annotation.RequiresApi;
+
 import java.io.ByteArrayOutputStream;
 import java.io.OutputStream;
 import java.io.IOException;
@@ -247,6 +251,7 @@ extends ByteArrayOutputStream implements DerEncoder {
      *
      * @param bits the bit string, MSB first
      */
+    @RequiresApi(api = Build.VERSION_CODES.GINGERBREAD)
     public void putTruncatedUnalignedBitString(BitArray ba) throws IOException {
         putUnalignedBitString(ba.truncate());
     }
@@ -368,6 +373,7 @@ extends ByteArrayOutputStream implements DerEncoder {
      * <P>YYMMDDhhmmss{Z|+hhmm|-hhmm} ... emits only using Zulu time
      * and with seconds (even if seconds=0) as per RFC 3280.
      */
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public void putUTCTime(Date d) throws IOException {
         putTime(d, DerValue.tag_UtcTime);
     }
@@ -378,6 +384,7 @@ extends ByteArrayOutputStream implements DerEncoder {
      * <P>YYYYMMDDhhmmss{Z|+hhmm|-hhmm} ... emits only using Zulu time
      * and with seconds (even if seconds=0) as per RFC 3280.
      */
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public void putGeneralizedTime(Date d) throws IOException {
         putTime(d, DerValue.tag_GeneralizedTime);
     }
@@ -389,6 +396,7 @@ extends ByteArrayOutputStream implements DerEncoder {
      * @param d the date to be marshalled
      * @param tag the tag for UTC Time or Generalized Time
      */
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     private void putTime(Date d, byte tag) throws IOException {
 
         /*

@@ -25,10 +25,13 @@
 
 package com.apk.jks.x509;
 
+import android.os.Build;
+
 import com.apk.jks.ec.ECKeyFactory;
 import com.apk.jks.utils.ObjectIdentifier;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 
 import com.apk.jks.utils.DerValue;
 
@@ -357,6 +360,7 @@ public class AlgorithmId implements Serializable, DerEncoder {
      * @deprecated use the short get form of this method.
      * @exception NoSuchAlgorithmException on error.
      */
+    @RequiresApi(api = Build.VERSION_CODES.GINGERBREAD)
     @Deprecated
     public static AlgorithmId getAlgorithmId(String algname)
             throws NoSuchAlgorithmException {
@@ -370,6 +374,7 @@ public class AlgorithmId implements Serializable, DerEncoder {
      * @param algname the name being used
      * @exception NoSuchAlgorithmException on error.
      */
+    @RequiresApi(api = Build.VERSION_CODES.GINGERBREAD)
     public static AlgorithmId get(String algname)
             throws NoSuchAlgorithmException {
         ObjectIdentifier oid;
@@ -394,6 +399,7 @@ public class AlgorithmId implements Serializable, DerEncoder {
      * @param algparams the associated algorithm parameters.
      * @exception NoSuchAlgorithmException on error.
      */
+    @RequiresApi(api = Build.VERSION_CODES.GINGERBREAD)
     public static AlgorithmId get(AlgorithmParameters algparams)
             throws NoSuchAlgorithmException {
         ObjectIdentifier oid;
@@ -423,6 +429,7 @@ public class AlgorithmId implements Serializable, DerEncoder {
      * may have a different OID when used as a "Signature" algorithm than when
      * used as a "KeyPairGenerator" algorithm.
      */
+    @RequiresApi(api = Build.VERSION_CODES.GINGERBREAD)
     private static ObjectIdentifier algOID(String name) throws IOException {
         // See if algname is in printable OID ("dot-dot") notation
         if (name.indexOf('.') != -1) {

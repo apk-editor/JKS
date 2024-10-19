@@ -25,9 +25,12 @@
 
 package com.apk.jks.x509;
 
+import android.os.Build;
+
 import com.apk.jks.utils.DerValue;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -55,6 +58,7 @@ public class GeneralSubtrees implements Cloneable {
      *
      * @param val the DER encoded form of the same.
      */
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public GeneralSubtrees(DerValue val) throws IOException {
         this();
         if (val.tag != DerValue.tag_Sequence) {

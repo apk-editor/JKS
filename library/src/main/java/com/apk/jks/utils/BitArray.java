@@ -25,7 +25,10 @@
 
 package com.apk.jks.utils;
 
+import android.os.Build;
+
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 
 import java.io.ByteArrayOutputStream;
 import java.util.Arrays;
@@ -259,6 +262,7 @@ public class BitArray {
 
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.GINGERBREAD)
     public BitArray truncate() {
         for (int i=length-1; i>=0; i--) {
             if (get(i)) {

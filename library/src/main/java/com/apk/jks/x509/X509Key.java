@@ -25,6 +25,8 @@
 
 package com.apk.jks.x509;
 
+import android.os.Build;
+
 import com.apk.jks.utils.BitArray;
 import com.apk.jks.utils.DerValue;
 
@@ -47,6 +49,7 @@ import java.security.spec.X509EncodedKeySpec;
 import com.apk.jks.utils.HexDumpEncoder;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 
 import com.apk.jks.utils.DerOutputStream;
 
@@ -150,6 +153,7 @@ public class X509Key implements PublicKey {
      * @param in the DER-encoded SubjectPublicKeyInfo value
      * @exception IOException on data format errors
      */
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public static PublicKey parse(DerValue in) throws IOException
     {
         AlgorithmId algorithm;
@@ -195,6 +199,7 @@ public class X509Key implements PublicKey {
      * specific algorithm ID or else returning this generic base class.
      * See the description above.
      */
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     static PublicKey buildX509Key(AlgorithmId algid, BitArray key)
       throws IOException, InvalidKeyException
     {

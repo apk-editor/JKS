@@ -25,7 +25,10 @@
 
 package com.apk.jks.utils;
 
+import android.os.Build;
+
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 
 import java.io.ByteArrayInputStream;
 import java.io.DataInputStream;
@@ -520,6 +523,7 @@ public class DerValue {
      * encoding restrictions (ASCII, T61, Printable, IA5, BMP, UTF8).
      */
     // TBD: Need encoder for UniversalString before it can be handled.
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public String getAsString() throws IOException {
         if (tag == tag_UTF8String)
             return getUTF8String();
@@ -572,6 +576,7 @@ public class DerValue {
      *
      * @return the printable string held in this value
      */
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public String getPrintableString()
     throws IOException {
         if (tag != tag_PrintableString)
@@ -586,6 +591,7 @@ public class DerValue {
      *
      * @return the teletype string held in this value
      */
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public String getT61String() throws IOException {
         if (tag != tag_T61String)
             throw new IOException(
@@ -599,6 +605,7 @@ public class DerValue {
      *
      * @return the ASCII string held in this value
      */
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public String getIA5String() throws IOException {
         if (tag != tag_IA5String)
             throw new IOException(
@@ -613,6 +620,7 @@ public class DerValue {
      * @return a string corresponding to the encoded BMPString held in
      * this value
      */
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public String getBMPString() throws IOException {
         if (tag != tag_BMPString)
             throw new IOException(
@@ -629,6 +637,7 @@ public class DerValue {
      * @return a string corresponding to the encoded UTF8String held in
      * this value
      */
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public String getUTF8String() throws IOException {
         if (tag != tag_UTF8String)
             throw new IOException(
@@ -643,6 +652,7 @@ public class DerValue {
      * @return a string corresponding to the encoded GeneralString held in
      * this value
      */
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public String getGeneralString() throws IOException {
         if (tag != tag_GeneralString)
             throw new IOException(
@@ -707,6 +717,7 @@ public class DerValue {
      *
      * @return printable representation of the value
      */
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @NonNull
     public String toString() {
         try {
@@ -835,6 +846,7 @@ public class DerValue {
      *
      * @return a hashcode for this DerValue.
      */
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public int hashCode() {
         return toString().hashCode();
     }

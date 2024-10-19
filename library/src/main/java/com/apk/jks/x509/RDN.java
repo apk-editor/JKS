@@ -25,12 +25,15 @@
 
 package com.apk.jks.x509;
 
+import android.os.Build;
+
 import com.apk.jks.utils.DerInputStream;
 import com.apk.jks.utils.DerOutputStream;
 import com.apk.jks.utils.DerValue;
 import com.apk.jks.utils.ObjectIdentifier;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 
 import java.io.IOException;
 import java.io.StringReader;
@@ -64,6 +67,7 @@ public class RDN {
      * @param keyword an additional mapping of keywords to OIDs
      * @throws IOException on parsing error
      */
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public RDN(String name, Map<String, String> keywordMap) throws IOException {
         int quoteCount = 0;
         int searchOffset = 0;
@@ -125,6 +129,7 @@ public class RDN {
      * @param name String form of RDN
      * @throws IOException on parsing error
      */
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     RDN(String name, String format) throws IOException {
         this(name, format, Collections.emptyMap());
     }
@@ -141,6 +146,7 @@ public class RDN {
      * @param keyword an additional mapping of keywords to OIDs
      * @throws IOException on parsing error
      */
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     RDN(String name, String format, Map<String, String> keywordMap)
         throws IOException {
         if (!format.equalsIgnoreCase("RFC2253")) {
@@ -219,24 +225,13 @@ public class RDN {
     RDN(int i) { assertion = new AVA[i]; }
 
     /**
-     * Return an immutable List of the AVAs in this RDN.
-     */
-    public List<AVA> avas() {
-        List<AVA> list = avaList;
-        if (list == null) {
-            list = Collections.unmodifiableList(Arrays.asList(assertion));
-            avaList = list;
-        }
-        return list;
-    }
-
-    /**
      * Return the number of AVAs in this RDN.
      */
     public int size() {
         return assertion.length;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public boolean equals(Object obj) {
         if (this == obj) {
             return true;
@@ -259,23 +254,9 @@ public class RDN {
      *
      * @returns int hashCode value
      */
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public int hashCode() {
         return toRFC2253String(true).hashCode();
-    }
-
-    /*
-     * return specified attribute value from RDN
-     *
-     * @params oid ObjectIdentifier of attribute to be found
-     * @returns DerValue of attribute value; null if attribute does not exist
-     */
-    DerValue findAttribute(ObjectIdentifier oid) {
-        for (AVA ava : assertion) {
-            if (ava.oid.equals(oid)) {
-                return ava.value;
-            }
-        }
-        return null;
     }
 
     /*
@@ -293,6 +274,7 @@ public class RDN {
      * of attribute/value assertions, and emitting attribute type keywords
      * from RFCs 1779, 2253, and 3280.
      */
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @NonNull
     public String toString() {
         if (assertion.length == 1) {
@@ -311,29 +293,10 @@ public class RDN {
 
     /*
      * Returns a printable form of this RDN using the algorithm defined in
-     * RFC 1779. RFC 1779 attribute type keywords are emitted, as well
-     * as keywords contained in the OID/keyword map.
-     */
-    public String toRFC1779String(Map<String, String> oidMap) {
-        if (assertion.length == 1) {
-            return assertion[0].toRFC1779String(oidMap);
-        }
-
-        StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < assertion.length; i++) {
-            if (i != 0) {
-                sb.append(" + ");
-            }
-            sb.append(assertion[i].toRFC1779String(oidMap));
-        }
-        return sb.toString();
-    }
-
-    /*
-     * Returns a printable form of this RDN using the algorithm defined in
      * RFC 2253. RFC 2253 attribute type keywords are emitted, as well as
      * keywords contained in the OID/keyword map.
      */
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public String toRFC2253String(Map<String, String> oidMap) {
         return toRFC2253StringInternal(false, oidMap);
     }
@@ -344,6 +307,7 @@ public class RDN {
      * If canonical is true, then additional canonicalizations
      * documented in X500Principal.getName are performed.
      */
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public String toRFC2253String(boolean canonical) {
         if (!canonical) {
             return toRFC2253StringInternal
@@ -358,6 +322,7 @@ public class RDN {
         return c;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     private String toRFC2253StringInternal
         (boolean canonical, Map<String, String> oidMap) {
         /*
@@ -418,6 +383,7 @@ class AVAComparator implements Comparator<AVA> {
      * AVA's containing a standard keyword are ordered alphabetically,
      * followed by AVA's containing an OID keyword, ordered numerically
      */
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public int compare(AVA a1, AVA a2) {
         boolean a1Has2253 = a1.hasRFC2253Keyword();
         boolean a2Has2253 = a2.hasRFC2253Keyword();

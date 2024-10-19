@@ -25,9 +25,12 @@
 
 package com.apk.jks.x509;
 
+import android.os.Build;
+
 import com.apk.jks.utils.DerOutputStream;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 
 import com.apk.jks.utils.DerInputStream;
 import com.apk.jks.utils.DerValue;
@@ -51,6 +54,7 @@ public class EDIPartyName implements GeneralNameInterface {
      * @param derValue the encoded DER EDIPartyName.
      * @exception IOException on error.
      */
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public EDIPartyName(DerValue derValue) throws IOException {
         DerInputStream in = new DerInputStream(derValue.toByteArray());
         DerValue[] seq = in.getSequence(2);

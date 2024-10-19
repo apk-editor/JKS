@@ -25,9 +25,12 @@
 
 package com.apk.jks.x509;
 
+import android.os.Build;
+
 import com.apk.jks.utils.DerValue;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 
 import java.io.IOException;
 import java.net.URI;
@@ -49,6 +52,7 @@ public class URIName implements GeneralNameInterface {
      * @param derValue the encoded DER URIName.
      * @exception IOException on error.
      */
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public URIName(DerValue derValue) throws IOException {
         this(derValue.getIA5String());
     }
@@ -59,11 +63,12 @@ public class URIName implements GeneralNameInterface {
      * @param name the URIName.
      * @throws IOException if name is not a proper URIName
      */
+    @RequiresApi(api = Build.VERSION_CODES.GINGERBREAD)
     public URIName(String name) throws IOException {
         try {
             uri = new URI(name);
         } catch (URISyntaxException use) {
-            throw (IOException) new IOException
+            throw new IOException
                 ("invalid URI name:" + name, use);
         }
         if (uri.getScheme() == null) {
@@ -111,13 +116,14 @@ public class URIName implements GeneralNameInterface {
      * @param value the URI name constraint
      * @throws IOException if name is not a proper URI name constraint
      */
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public static URIName nameConstraint(DerValue value) throws IOException {
         URI uri;
         String name = value.getIA5String();
         try {
             uri = new URI(name);
         } catch (URISyntaxException use) {
-            throw (IOException) new IOException
+            throw new IOException
                 ("invalid URI name constraint:" + name, use);
         }
         if (uri.getScheme() == null) {
@@ -332,6 +338,7 @@ public class URIName implements GeneralNameInterface {
      * @returns distance of name from root
      * @throws UnsupportedOperationException if not supported for this name type
      */
+    @RequiresApi(api = Build.VERSION_CODES.GINGERBREAD)
     public int subtreeDepth() throws UnsupportedOperationException {
         DNSName dnsName;
         try {

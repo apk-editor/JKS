@@ -25,9 +25,12 @@
 
 package com.apk.jks.x509;
 
+import android.os.Build;
+
 import com.apk.jks.utils.BitArray;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -112,6 +115,7 @@ public class NetscapeCertTypeExtension extends Extension implements CertAttrSet<
     }
 
     // Encode this extension value
+    @RequiresApi(api = Build.VERSION_CODES.GINGERBREAD)
     private void encodeThis() throws IOException {
         DerOutputStream os = new DerOutputStream();
         os.putTruncatedUnalignedBitString(new BitArray(this.bitString));
@@ -143,6 +147,7 @@ public class NetscapeCertTypeExtension extends Extension implements CertAttrSet<
     /**
      * Set the attribute value.
      */
+    @RequiresApi(api = Build.VERSION_CODES.GINGERBREAD)
     public void set(String name, Object obj) throws IOException {
         if (!(obj instanceof Boolean))
             throw new IOException("Attribute must be of type Boolean.");
@@ -162,6 +167,7 @@ public class NetscapeCertTypeExtension extends Extension implements CertAttrSet<
     /**
      * Delete the attribute value.
      */
+    @RequiresApi(api = Build.VERSION_CODES.GINGERBREAD)
     public void delete(String name) throws IOException {
         set(getPosition(name), false);
         encodeThis();
@@ -201,6 +207,7 @@ public class NetscapeCertTypeExtension extends Extension implements CertAttrSet<
      * @param out the DerOutputStream to write the extension to.
      * @exception IOException on encoding errors.
      */
+    @RequiresApi(api = Build.VERSION_CODES.GINGERBREAD)
     public void encode(OutputStream out) throws IOException {
         DerOutputStream tmp = new DerOutputStream();
 

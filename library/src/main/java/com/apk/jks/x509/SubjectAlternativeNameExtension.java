@@ -25,10 +25,13 @@
 
 package com.apk.jks.x509;
 
+import android.os.Build;
+
 import com.apk.jks.utils.DerOutputStream;
 import com.apk.jks.utils.DerValue;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -70,6 +73,7 @@ implements CertAttrSet<String> {
      * @exception ClassCastException if value is not an array of bytes
      * @exception IOException on error.
      */
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public SubjectAlternativeNameExtension(Boolean critical, Object value)
     throws IOException {
         this.extensionId = PKIXExtensions.SubjectAlternativeName_Id;

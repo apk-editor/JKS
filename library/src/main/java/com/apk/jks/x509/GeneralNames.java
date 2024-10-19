@@ -25,10 +25,13 @@
 
 package com.apk.jks.x509;
 
+import android.os.Build;
+
 import com.apk.jks.utils.DerOutputStream;
 import com.apk.jks.utils.DerValue;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -44,6 +47,7 @@ public class GeneralNames {
      * @param derVal the DerValue to construct the GeneralNames from.
      * @exception IOException on error.
      */
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public GeneralNames(DerValue derVal) throws IOException {
         this();
         if (derVal.tag != DerValue.tag_Sequence) {
